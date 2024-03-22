@@ -5,9 +5,12 @@ import About from "./pages/About";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
+import Header from "./components/Header";
 export default function App() {
   return (
     <BrowserRouter>
+    {/* Adding Header to all pages */}
+    <Header/>
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/about" element={<About/>}/>
@@ -17,4 +20,4 @@ export default function App() {
       </Routes>
     </BrowserRouter>
   );
-}
+  }
