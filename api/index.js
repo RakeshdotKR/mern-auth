@@ -1,6 +1,6 @@
 dotenv.config();
 import express from "express"; //Add this line in package.json "description": "","type":"module",
-import mongoose from "mongoose";
+import mongoose from "mongoose"; //ES6 type import
 import dotenv from 'dotenv';
 
 // console.log("Mongo Uri: ",process.env.MONGOURI);
@@ -16,7 +16,6 @@ mongoose
 });
 
 const app = express();
-
-app.listen(3000,()=>{
+app.listen(process.env.PORT,()=>{
     console.log("Server listening on port 3000");
 });
