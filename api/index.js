@@ -1,21 +1,26 @@
 dotenv.config();
 import express from "express"; //Add this line in package.json "description": "","type":"module",
 import mongoose from "mongoose"; //ES6 type import
-import dotenv from 'dotenv';
-
+import dotenv from "dotenv";
+import userRoutes from './routes/user.route.js'; //.js at end is necessary
 // console.log("Mongo Uri: ",process.env.MONGOURI);
 
-
 mongoose
-.connect(process.env.MONGOURI, { useNewUrlParser: true, useUnifiedTopology: true })
-.then(()=>{
+  .connect(process.env.MONGOURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
     console.log("Successfully connected to MongoDB");
-})
-.catch((err)=>{
+  })
+  .catch((err) => {
     console.log(err);
-});
+  });
 
 const app = express();
-app.listen(process.env.PORT,()=>{
-    console.log("Server listening on port 3000");
+app.listen(process.env.PORT, () => {
+  console.log("Server listening on port 3000");
 });
+
+
+app.use('/api/user',userRoutes); //http://localhost:3000/api/user/
