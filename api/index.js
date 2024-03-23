@@ -3,6 +3,7 @@ import express from "express"; //Add this line in package.json "description": ""
 import mongoose from "mongoose"; //ES6 type import
 import dotenv from "dotenv";
 import userRoutes from './routes/user.route.js'; //.js at end is necessary
+import authRoutes from './routes/auth.route.js'; //.js at end is necessary
 // console.log("Mongo Uri: ",process.env.MONGOURI);
 
 mongoose
@@ -18,9 +19,13 @@ mongoose
   });
 
 const app = express();
+
+app.use(express.json()); //This allows JSON as the input of our backend
+
 app.listen(process.env.PORT, () => {
   console.log("Server listening on port 3000");
 });
 
 
 app.use('/api/user',userRoutes); //http://localhost:3000/api/user/
+app.use('/api/auth',authRoutes); //http://localhost:3000/api/auth/signup
