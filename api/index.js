@@ -29,3 +29,13 @@ app.listen(process.env.PORT, () => {
 
 app.use('/api/user',userRoutes); //http://localhost:3000/api/user/
 app.use('/api/auth',authRoutes); //http://localhost:3000/api/auth/signup
+
+app.use((err,req,res,next)=>{
+  const statusCode = err.statusCode || 500;
+  const message = err.message || 'Internal server error';
+  return res.status(statusCode).json({
+    success:false,
+    message,
+    statusCode,
+  });
+});
