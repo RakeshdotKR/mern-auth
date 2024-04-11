@@ -9,15 +9,15 @@ import Header from "./components/Header";
 export default function App() {
   return (
     <BrowserRouter>
-    {/* Adding Header to all pages */}
-    <Header/>
+      {/* Adding Header to all pages */}
+      <Header />
       <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/about" element={<About/>}/>
-        <Route path="/sign-in" element={<SignIn/>}/>
-        <Route path="/sign-up" element={<SignUp/>}/>
-        <Route path="/profile" element={<Profile/>}/>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
-  }
+}

@@ -1,16 +1,21 @@
 // import React from "react";
 import { useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
+import { signInStart, signInSuccess, signInFailure } from "../user/userSlice"; //for redux
+import {useDispatch, useSelector} from 'react-redux'; //for redux
+
 export default function SignIn() {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  const { loading, error } = useSelector((state) => state.user); //for redux
 
   /* Adding state individually of the form:
   const [username,setusername] = useState('');
   const [email,setemail] = useState('');
   const [password,setpassword] = useState(''); */
   const navigate = useNavigate();
+  const dispatch = useDispatch(); //for redux
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
     //console.log(formData);
@@ -18,8 +23,9 @@ export default function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
-      setError(false);
+      dispatch(signInStart());//for redux
+      // setLoading(true);
+      // setError(false);
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -30,15 +36,18 @@ export default function SignIn() {
       const data = await res.json();
       //console.log(data);
       
-      setLoading(false);
+      //setLoading(false);
       if (data.success === false) {
-        setError(true);
+        //setError(true);
+        dispatch(signInFailure(data));//for redux
         return;
       }
+      dispatch(signInSuccess(data));//for redux
       navigate("/");
     } catch (error) {
-      setLoading(false);
-      setError(true);
+      // setLoading(false);
+      // setError(true);
+      dispatch(signInFailure(error));//for redux
     }
   };
   return (
@@ -72,7 +81,8 @@ export default function SignIn() {
           <span className="text-blue-600">Sign Up</span>
         </Link>
       </div>
-      <p className='text-red-700 mt-5'>{error && 'Something went wrong!'}</p>
+      {/* Following line changed post redux */}
+      <p className='text-red-700 mt-5'>{error ? error.message || 'Something went wrong!':""}</p>
     </div>
   );
 }
